@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <header class="py-3">
+    <form method="get">
+    <div class="form-group">
+      <label for="city" class="city-label">Get weather for your city:</label>
+      <input type="text" class="form-control" name="city">
+    </div>
+    <button class="btn apply-button" type="submit">get</button>
+  </form>
+  </header>
+    
+    {% if data  %}
+      <div class="wather-main-container">
+        {% if data.resolvedAddress %}
+          <h4>Showing data for {{ data.resolvedAddress }}</h4>
+          <h5>{{ data.description }}</h5>
+          <div class="weather-days-container">
+            {% for day in data.days %}
+              <div class="card shadow-sm weather-day-container">
+                <div class="card-header py-3 weather-header">{{ day.datetime }}</div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ day.description }}</h5>
+                  <div class="mt-auto">
+                    <ul class="list-unstyled">
+                      <li>Feels like temperature: {{ day.feelslike }}°C</li>
+                      <li>Sunrise: {{ day.sunrise }}</li>
+                      <li>Sunset: {{ day.sunset }}</li>
+                    </ul>   
+                  </div>                                 
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <h4 class="text-danger">{{ data }}</h4>
+        {% endif %}
+      </div>
+    {% endif %}
+{% endblock content %}
